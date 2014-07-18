@@ -122,6 +122,6 @@ printStackOfThread() {
     done
 }
 top -p $pid -H -n 1 -b > /tmp/top.out
-cat /tmp/top.out |awk '$12=="java"{print $0}'|sort -k9 -r -n|head --lines 5|printStackOfThread
+cat /tmp/top.out |awk '$12=="java"{print $0}'|sort -k9 -r -n|head --lines "${count}"|printStackOfThread
 
 
