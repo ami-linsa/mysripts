@@ -48,7 +48,7 @@ while true; do
     esac
 done
 
-echo "pid: " $pid
+#echo "pid: " $pid
 if [ ! -n "$pid" ]; then
    usage
    exit
@@ -83,14 +83,15 @@ fi
 
 uuid=`date +%s`_${RANDOM}_$$
 
-#cleanupWhenExit() {
-#    rm /tmp/${uuid}_* &> /dev/null
-#}
-#trap "cleanupWhenExit" EXIT
+cleanupWhenExit() {
+    rm /tmp/${uuid}_* &> /dev/null
+    rm /tmp/top.out &> /dev/null
+}
+trap "cleanupWhenExit" EXIT
 
 printStackOfThread() {
     	jstackFile=/tmp/${uuid}_${pid}
-	echo "jstack file: " $jstackFile
+	#echo "jstack file: " $jstackFile
 	
 	[ ! -f "${jstackFile}" ] && {
 	    jstack ${pid} > ${jstackFile} || {
